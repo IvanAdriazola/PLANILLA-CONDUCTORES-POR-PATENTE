@@ -65,7 +65,7 @@
             var select1 = document.createElement("select");
             select1.className = "listaDesplegable";
             select1.setAttribute("onchange", "mostrarSeleccion(this)");
-            loadOptionsFromTextFile('<https://raw.githubusercontent.com/IvanAdriazola/PLANILLA-CONDUCTORES-POR-PATENTE/main/COL1>', select1);
+            loadOptionsFromTextFile('https://raw.githubusercontent.com/IvanAdriazola/PLANILLA-CONDUCTORES-POR-PATENTE/main/COL1.txt', select1);
             cell1.appendChild(select1);
 
             // Columna 2
@@ -73,7 +73,7 @@
             var select2 = document.createElement("select");
             select2.className = "listaDesplegable";
             select2.setAttribute("onchange", "mostrarSeleccion(this)");
-            loadOptionsFromTextFile('<https://raw.githubusercontent.com/IvanAdriazola/PLANILLA-CONDUCTORES-POR-PATENTE/main/COL2>', select2);
+            loadOptionsFromTextFile('https://raw.githubusercontent.com/IvanAdriazola/PLANILLA-CONDUCTORES-POR-PATENTE/main/COL2.txt', select2);
             cell2.appendChild(select2);
         }
 
