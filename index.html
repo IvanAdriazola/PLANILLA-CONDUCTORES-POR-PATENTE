@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con Listas Desplegables</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        select {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <table id="miTabla">
+        <thead>
+            <tr>
+                <th>Columna 1</th>
+                <th>Columna 2</th>
+                <th>Columna 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"><option value="Opción 1">Opción 1</option><option value="Opción 2">Opción 2</option><option value="Opción 3">Opción 3</option></select></td>
+                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"><option value="Opción A">Opción A</option><option value="Opción B">Opción B</option><option value="Opción C">Opción C</option></select></td>
+                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"><option value="X">X</option><option value="Y">Y</option><option value="Z">Z</option></select></td>
+            </tr>
+            <!-- Agrega más filas según sea necesario -->
+        </tbody>
+    </table>
+
+    <script>
+        function mostrarSeleccion(elemento) {
+            alert("Seleccionaste: " + elemento.value);
+            // Puedes realizar otras acciones con el valor seleccionado
+        }
+    </script>
+
+</body>
+</html>
