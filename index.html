@@ -1,100 +1,78 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Table with List Search</title>
+    <title>Project Table</title>
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-top: 20px;
         }
-
+        table, th, td {
+            border: 1px solid black;
+        }
         th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        select {
-            width: 100%;
-        }
-
-        .search-input {
-            width: 80%;
-            margin-bottom: 5px;
+            padding: 10px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <table id="miTabla">
+<!-- Front Page with Project Selection -->
+<label for="projectSelect">Select Project:</label>
+<select id="projectSelect" onchange="showTable()">
+    <option value="project1">Project 1</option>
+    <option value="project2">Project 2</option>
+    <option value="project3">Project 3</option>
+</select>
+
+<!-- Table Section -->
+<div id="tableContainer" style="display: none;">
+    <table id="projectTable">
         <thead>
             <tr>
-                <th>Columna 1</th>
-                <th>Columna 2</th>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <th>Column 3</th>
+                <th>Column 4</th>
+                <th>Column 5</th>
+                <th>Column 6</th>
+                <th>Column 7</th>
+                <th>Column 8</th>
+                <th>Column 9</th>
+                <th>Column 10</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"></select></td>
-                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"></select></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td>
+                    <select>
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </select>
+                </td>
+                <!-- Repeat the above structure for the remaining columns -->
             </tr>
-            <!-- Additional rows will be dynamically added here -->
+            <!-- Repeat the above row structure for additional rows -->
         </tbody>
     </table>
+</div>
 
-    <button onclick="agregarFila()">Agregar Fila</button>
+<script>
+    function showTable() {
+        var projectSelect = document.getElementById("projectSelect");
+        var tableContainer = document.getElementById("tableContainer");
 
-    <script>
-        function mostrarSeleccion(elemento) {
-            alert("Seleccionaste: " + elemento.value);
-            // You can perform other actions with the selected value
-        }
-
-        function agregarFila() {
-            var table = document.getElementById("miTabla").getElementsByTagName('tbody')[0];
-            var newRow = table.insertRow(table.rows.length);
-
-            // Columna 1
-            var cell1 = newRow.insertCell(0);
-            var select1 = document.createElement("select");
-            select1.className = "listaDesplegable";
-            select1.setAttribute("onchange", "mostrarSeleccion(this)");
-            loadOptionsFromTextFile('https://raw.githubusercontent.com/IvanAdriazola/PLANILLA-CONDUCTORES-POR-PATENTE/main/COL1.txt', select1);
-            cell1.appendChild(select1);
-
-            // Columna 2
-            var cell2 = newRow.insertCell(1);
-            var select2 = document.createElement("select");
-            select2.className = "listaDesplegable";
-            select2.setAttribute("onchange", "mostrarSeleccion(this)");
-            loadOptionsFromTextFile('https://raw.githubusercontent.com/IvanAdriazola/PLANILLA-CONDUCTORES-POR-PATENTE/main/COL2.txt', select2);
-            cell2.appendChild(select2);
-        }
-
-        function loadOptionsFromTextFile(fileUrl, selectElement) {
-            fetch(fileUrl)
-                .then(response => response.text())
-                .then(data => {
-                    // Split the lines of the text file and add each line as an option
-                    data.split('\n').forEach(option => {
-                        var trimmedOption = option.trim();
-                        if (trimmedOption !== '') {
-                            var optionElement = document.createElement("option");
-                            optionElement.value = trimmedOption;
-                            optionElement.text = trimmedOption;
-                            selectElement.appendChild(optionElement);
-                        }
-                    });
-                })
-                .catch(error => console.error('Error loading options:', error));
-        }
-    </script>
+        // Show the table only if a project is selected
+        tableContainer.style.display = projectSelect.value !== "" ? "block" : "none";
+    }
+</script>
 
 </body>
 </html>
