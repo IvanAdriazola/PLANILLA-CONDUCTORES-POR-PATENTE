@@ -37,13 +37,7 @@
                 <th>Column 1</th>
                 <th>Column 2</th>
                 <th>Column 3</th>
-                <th>Column 4</th>
-                <th>Column 5</th>
-                <th>Column 6</th>
-                <th>Column 7</th>
-                <th>Column 8</th>
-                <th>Column 9</th>
-                <th>Column 10</th>
+                <!-- ... (add headers for remaining columns if needed) ... -->
             </tr>
         </thead>
         <tbody>
@@ -51,15 +45,17 @@
                 <td><input type="text"></td>
                 <td><input type="text"></td>
                 <td>
-                    <select>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                    <input type="text" oninput="filterOptions(this)">
+                    <select id="dropdownOptions">
+                        <option value="code1">Code 1</option>
+                        <option value="code2">Code 2</option>
+                        <option value="code3">Code 3</option>
+                        <option value="code4">Code 4</option>
                     </select>
                 </td>
-                <!-- Repeat the above structure for the remaining columns -->
+                <!-- ... (add cells for remaining columns if needed) ... -->
             </tr>
-            <!-- Repeat the above row structure for additional rows -->
+            <!-- ... (add rows for additional entries if needed) ... -->
         </tbody>
     </table>
 </div>
@@ -68,9 +64,18 @@
     function showTable() {
         var projectSelect = document.getElementById("projectSelect");
         var tableContainer = document.getElementById("tableContainer");
-
-        // Show the table only if a project is selected
         tableContainer.style.display = projectSelect.value !== "" ? "block" : "none";
+    }
+
+    function filterOptions(inputElement) {
+        var inputText = inputElement.value.toLowerCase();
+        var dropdown = document.getElementById("dropdownOptions");
+        var options = dropdown.options;
+
+        for (var i = 0; i < options.length; i++) {
+            var optionText = options[i].text.toLowerCase();
+            options[i].style.display = optionText.includes(inputText) ? "block" : "none";
+        }
     }
 </script>
 
