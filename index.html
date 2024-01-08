@@ -1,82 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Table</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Entry</title>
+  <style>
+    #answerList {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Front Page with Project Selection -->
-<label for="projectSelect">Select Project:</label>
-<select id="projectSelect" onchange="showTable()">
-    <option value="project1">Project 1</option>
-    <option value="project2">Project 2</option>
-    <option value="project3">Project 3</option>
-</select>
+<label for="answerInput">Enter Answer:</label>
+<input type="text" id="answerInput" oninput="filterAnswers()">
 
-<!-- Table Section -->
-<div id="tableContainer" style="display: none;">
-    <table id="projectTable">
-        <thead>
-            <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <th>Column 3</th>
-                <!-- ... (add headers for remaining columns if needed) ... -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td>
-                    <input type="text" oninput="filterOptions(this)">
-                    <select id="dropdownOptions">
-                        <option value="code1">Code 1</option>
-                        <option value="code2">Code 2</option>
-                        <option value="code3">Code 3</option>
-                        <option value="code4">Code 4</option>
-                    </select>
-                </td>
-                <!-- ... (add cells for remaining columns if needed) ... -->
-            </tr>
-            <!-- ... (add rows for additional entries if needed) ... -->
-        </tbody>
-    </table>
-</div>
+<ul id="answerList"></ul>
 
 <script>
-    function showTable() {
-        var projectSelect = document.getElementById("projectSelect");
-        var tableContainer = document.getElementById("tableContainer");
-        tableContainer.style.display = projectSelect.value !== "" ? "block" : "none";
-    }
+  // Fetch the list of possible answers from the server
+  function fetchAnswers() {
+    fetch('https://raw.githubusercontent.com/IvanAdriazola/PLANILLA-CONDUCTORES-POR-PATENTE/main/COL1.TXT')
+      .then(response => response.text())
+      .then(data => {
+        const answerList = data.split('\n');
+        updateAnswerList(answerList);
+      })
+      .catch(error => console.error('Error fetching answers:', error));
+  }
 
-    function filterOptions(inputElement) {
-        var inputText = inputElement.value.toLowerCase();
-        var dropdown = document.getElementById("dropdownOptions");
-        var options = dropdown.options;
+  // Update the displayed answer list based on the input
+  function updateAnswerList(answers) {
+    const input = document.getElementById('answerInput');
+    const filter = input.value.toLowerCase();
+    const filteredAnswers = answers.filter(answer => answer.toLowerCase().includes(filter));
 
-        for (var i = 0; i < options.length; i++) {
-            var optionText = options[i].text.toLowerCase();
-            options[i].style.display = optionText.includes(inputText) ? "block" : "none";
-        }
-    }
+    const listContainer = document.getElementById('answerList');
+    listContainer.innerHTML = '';
+
+    filteredAnswers.forEach(answer => {
+      const listItem = document.createElement('li');
+      listItem.textContent = answer;
+      listContainer.appendChild(listItem);
+    });
+
+    // Show or hide the list container based on whether there are filtered answers
+    listContainer.style.display = filteredAnswers.length > 0 ? 'block' : 'none';
+  }
+
+  // Filter answers when the input changes
+  function filterAnswers() {
+    updateAnswerList(allAnswers);
+  }
+
+  // Fetch answers when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchAnswers();
+  });
 </script>
 
 </body>
