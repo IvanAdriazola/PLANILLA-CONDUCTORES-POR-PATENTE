@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla con Listas Desplegables</title>
+    <title>Dynamic Table with List Search</title>
     <style>
         table {
             border-collapse: collapse;
@@ -23,6 +23,11 @@
         select {
             width: 100%;
         }
+
+        .search-input {
+            width: 80%;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -32,23 +37,62 @@
             <tr>
                 <th>Columna 1</th>
                 <th>Columna 2</th>
-                <th>Columna 3</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"><option value="Opción 1">Opción 1</option><option value="Opción 2">Opción 2</option><option value="Opción 3">Opción 3</option></select></td>
-                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"><option value="Opción A">Opción A</option><option value="Opción B">Opción B</option><option value="Opción C">Opción C</option></select></td>
-                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"><option value="X">X</option><option value="Y">Y</option><option value="Z">Z</option></select></td>
+                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"></select></td>
+                <td><select class="listaDesplegable" onchange="mostrarSeleccion(this)"></select></td>
             </tr>
-            <!-- Agrega más filas según sea necesario -->
+            <!-- Additional rows will be dynamically added here -->
         </tbody>
     </table>
+
+    <button onclick="agregarFila()">Agregar Fila</button>
 
     <script>
         function mostrarSeleccion(elemento) {
             alert("Seleccionaste: " + elemento.value);
-            // Puedes realizar otras acciones con el valor seleccionado
+            // You can perform other actions with the selected value
+        }
+
+        function agregarFila() {
+            var table = document.getElementById("miTabla").getElementsByTagName('tbody')[0];
+            var newRow = table.insertRow(table.rows.length);
+
+            // Columna 1
+            var cell1 = newRow.insertCell(0);
+            var select1 = document.createElement("select");
+            select1.className = "listaDesplegable";
+            select1.setAttribute("onchange", "mostrarSeleccion(this)");
+            loadOptionsFromTextFile('<URL_TO_YOUR_FIRST_TEXT_FILE>', select1);
+            cell1.appendChild(select1);
+
+            // Columna 2
+            var cell2 = newRow.insertCell(1);
+            var select2 = document.createElement("select");
+            select2.className = "listaDesplegable";
+            select2.setAttribute("onchange", "mostrarSeleccion(this)");
+            loadOptionsFromTextFile('<URL_TO_YOUR_SECOND_TEXT_FILE>', select2);
+            cell2.appendChild(select2);
+        }
+
+        function loadOptionsFromTextFile(fileUrl, selectElement) {
+            fetch(fileUrl)
+                .then(response => response.text())
+                .then(data => {
+                    // Split the lines of the text file and add each line as an option
+                    data.split('\n').forEach(option => {
+                        var trimmedOption = option.trim();
+                        if (trimmedOption !== '') {
+                            var optionElement = document.createElement("option");
+                            optionElement.value = trimmedOption;
+                            optionElement.text = trimmedOption;
+                            selectElement.appendChild(optionElement);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading options:', error));
         }
     </script>
 
