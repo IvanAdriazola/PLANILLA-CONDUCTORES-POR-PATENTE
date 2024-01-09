@@ -3,116 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filtered Dropdown</title>
-    <style>
-        /* Style the dropdown container */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* Style the input field */
-        input {
-            width: 200px;
-            padding: 10px;
-        }
-
-        /* Style the dropdown content */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            z-index: 1;
-            border: 1px solid #ccc;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        /* Style the dropdown items */
-        .dropdown-content a {
-            padding: 12px;
-            text-decoration: none;
-            display: block;
-            cursor: pointer;
-        }
-
-        /* Highlight the selected item */
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Display the dropdown content when input is focused */
-        .dropdown:focus-within .dropdown-content {
-            display: block;
-        }
-    </style>
+    <title>Simple Entry Box</title>
 </head>
 <body>
 
-<!-- Dropdown container -->
-<div class="dropdown" tabindex="0">
-    <!-- Input field for filtering -->
-    <input type="text" id="myInput" oninput="filterFunction()" onkeydown="handleKeyDown()" placeholder="Search for items">
-
-    <!-- Dropdown content -->
-    <div class="dropdown-content" id="myDropdown">
-        <!-- Dropdown items -->
-        <a href="#" onclick="selectItem(this)">Item 1</a>
-        <a href="#" onclick="selectItem(this)">Item 2</a>
-        <a href="#" onclick="selectItem(this)">Item 3</a>
-        <a href="#" onclick="selectItem(this)">Item 4</a>
-        <a href="#" onclick="selectItem(this)">Item 5</a>
-    </div>
-</div>
-
-<script>
-    // Function to filter dropdown items based on input
-    function filterFunction() {
-        var input, filter, dropdown, items, a, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        dropdown = document.getElementById("myDropdown");
-        items = dropdown.getElementsByTagName("a");
-
-        for (i = 0; i < items.length; i++) {
-            a = items[i];
-            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                items[i].style.display = "";
-            } else {
-                items[i].style.display = "none";
-            }
-        }
-    }
-
-    // Function to handle item selection
-    function selectItem(item) {
-        document.getElementById("myInput").value = item.innerHTML;
-        document.getElementById("myDropdown").style.display = "none";
-    }
-
-    // Function to handle keydown event
-    function handleKeyDown() {
-        var input, dropdown, items, i;
-
-        input = document.getElementById("myInput");
-        dropdown = document.getElementById("myDropdown");
-        items = dropdown.getElementsByTagName("a");
-
-        // Check if Enter key is pressed
-        if (event.key === "Enter") {
-            // Loop through dropdown items
-            for (i = 0; i < items.length; i++) {
-                // Check if input value matches any dropdown item
-                if (input.value.toUpperCase() === items[i].innerHTML.toUpperCase()) {
-                    // Perform desired action on matching item (e.g., submit form)
-                    alert("Item selected: " + input.value);
-                    // Prevent the default form submission behavior
-                    event.preventDefault();
-                    break;
-                }
-            }
-        }
-    }
-</script>
+    <label for="entryBox">Enter something:</label>
+    <input type="text" id="entryBox" name="entryBox">
 
 </body>
 </html>
